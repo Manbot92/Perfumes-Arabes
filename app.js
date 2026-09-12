@@ -15,7 +15,7 @@ function buildWhatsappLink(message) {
 }
 
 function formatPrice(n) {
-  return `$${n.toLocaleString("es-MX")} MXN`;
+  return `$${n.toLocaleString("es-AR")} ARS`;
 }
 
 function productCard(p) {
