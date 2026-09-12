@@ -186,13 +186,16 @@ function wireMobileNav() {
 }
 
 function wireScrollReveal() {
+  const items = document.querySelectorAll(".reveal:not(.is-visible)");
   const observer = new IntersectionObserver(
     (entries) => entries.forEach((e) => {
       if (e.isIntersecting) { e.target.classList.add("is-visible"); observer.unobserve(e.target); }
     }),
-    { threshold: 0.15 }
+    { threshold: 0, rootMargin: "0px 0px -5% 0px" }
   );
-  document.querySelectorAll(".reveal:not(.is-visible)").forEach((item) => observer.observe(item));
+  items.forEach((item) => observer.observe(item));
+  // Red de seguridad: si un scroll rápido salta el umbral, no dejar contenido invisible.
+  setTimeout(() => items.forEach((item) => item.classList.add("is-visible")), 2500);
 }
 
 function wireContactForm() {
