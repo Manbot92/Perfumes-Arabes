@@ -325,11 +325,11 @@ img { max-width: 100%; display: block; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  align-items: start;
 }
 
 .detail-body { padding: 32px 36px; }
-.detail-body h2 { font-size: 1.9rem; color: var(--cream); margin: 14px 0 10px; text-wrap: balance; }
+.detail-body .gender-badge { position: static; display: inline-block; margin-bottom: 10px; }
+.detail-body h2 { font-size: 1.9rem; color: var(--cream); margin: 0 0 10px; text-wrap: balance; }
 .detail-body .btn-primary { margin: 6px 0 30px; box-shadow: none; }
 .profile-title { color: var(--gold-light); font-size: 1.15rem; margin-bottom: 12px; }
 #radar-canvas { max-width: 100%; display: block; margin: 0 auto; }
@@ -341,7 +341,7 @@ img { max-width: 100%; display: block; }
   border-radius: var(--radius) 0 0 var(--radius);
   overflow: hidden;
 }
-.carousel-track { position: relative; aspect-ratio: 1 / 1; }
+.carousel-track { position: relative; height: 100%; min-height: 320px; }
 .carousel-track img {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
@@ -377,6 +377,7 @@ img { max-width: 100%; display: block; }
 @media (max-width: 860px) {
   .detail-grid { grid-template-columns: 1fr; }
   .carousel { border-radius: var(--radius) var(--radius) 0 0; }
+  .carousel-track { aspect-ratio: 1 / 1; height: auto; min-height: 0; }
   .detail-body { padding: 26px 24px 32px; }
 }
 
