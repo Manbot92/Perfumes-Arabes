@@ -38,12 +38,26 @@ function productCard(p) {
     </article>`;
 }
 
-function renderProducts() {
+function renderProducts(filter) {
   const featured = document.getElementById("featured-grid");
   const all = document.getElementById("product-grid");
   if (featured) featured.innerHTML = PRODUCTS.filter((p) => p.destacado).map(productCard).join("");
-  if (all) all.innerHTML = PRODUCTS.map(productCard).join("");
+  if (all) {
+    const list = !filter || filter === "todos" ? PRODUCTS : PRODUCTS.filter((p) => p.genero === filter);
+    all.innerHTML = list.map(productCard).join("");
+  }
   wireScrollReveal();
+}
+
+function wireFilters() {
+  const row = document.querySelector(".filter-row");
+  if (!row) return;
+  row.addEventListener("click", (e) => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    row.querySelectorAll(".filter-btn").forEach((b) => b.classList.toggle("is-active", b === btn));
+    renderProducts(btn.dataset.filter);
+  });
 }
 
 function drawRadar(canvas, perfil) {
@@ -51,14 +65,14 @@ function drawRadar(canvas, perfil) {
   const labels = Object.keys(perfil);
   const values = Object.values(perfil);
   const n = labels.length;
-  const size = canvas.width;
-  const cx = size / 2, cy = size / 2, r = size * 0.36;
+  const w = canvas.width, h = canvas.height;
+  const cx = w / 2, cy = h / 2, r = Math.min(w, h) * 0.32;
   const angle = (i) => -Math.PI / 2 + (i * 2 * Math.PI) / n;
 
-  ctx.clearRect(0, 0, size, size);
+  ctx.clearRect(0, 0, w, h);
   ctx.strokeStyle = "rgba(201,162,75,0.25)";
   ctx.fillStyle = "rgba(201,162,75,0.7)";
-  ctx.font = "13px Tajawal, sans-serif";
+  ctx.font = "12px Tajawal, sans-serif";
 
   // rings
   for (let ring = 1; ring <= 4; ring++) {
@@ -79,7 +93,7 @@ function drawRadar(canvas, perfil) {
     const x2 = cx + r * Math.cos(a), y2 = cy + r * Math.sin(a);
     ctx.strokeStyle = "rgba(201,162,75,0.25)";
     ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x2, y2); ctx.stroke();
-    const lx = cx + (r + 26) * Math.cos(a), ly = cy + (r + 26) * Math.sin(a);
+    const lx = cx + (r + 20) * Math.cos(a), ly = cy + (r + 20) * Math.sin(a);
     ctx.textAlign = Math.abs(Math.cos(a)) < 0.2 ? "center" : Math.cos(a) > 0 ? "left" : "right";
     ctx.fillText(label, lx, ly + 4);
   });
@@ -135,7 +149,7 @@ function renderDetail(id) {
       <span class="price price-lg">${formatPrice(p.precio)}</span>
       <a class="btn-primary" href="${p.ml}" target="_blank" rel="noopener noreferrer">Comprar en Mercado Libre</a>
       <h3 class="profile-title">Perfil Olfativo</h3>
-      <canvas id="radar-canvas" width="360" height="360"></canvas>
+      <canvas id="radar-canvas" width="340" height="230"></canvas>
     </div>`;
   drawRadar(document.getElementById("radar-canvas"), p.perfil);
 
@@ -198,16 +212,6 @@ function wireScrollReveal() {
   setTimeout(() => items.forEach((item) => item.classList.add("is-visible")), 2500);
 }
 
-function wireContactForm() {
-  const form = document.getElementById("contact-form");
-  if (!form) return;
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const texto = `Hola, soy ${form.nombre.value.trim()}. ${form.mensaje.value.trim()}`;
-    window.open(buildWhatsappLink(texto), "_blank", "noopener");
-  });
-}
-
 function wireModal() {
   const overlay = document.getElementById("modal-overlay");
   const closeBtn = document.getElementById("modal-close");
@@ -221,9 +225,9 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
   wireContactLinks();
   wireMobileNav();
-  wireContactForm();
   wireScrollReveal();
   wireModal();
+  wireFilters();
   router();
 });
 window.addEventListener("hashchange", router);

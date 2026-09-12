@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Catálogo · Perfumes del Mar</title>
+<meta name="description" content="Catálogo completo descargable de Perfumes del Mar, listo para imprimir o guardar como PDF." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>" />
+<style>
+  .catalog-page { max-width: 1000px; margin: 0 auto; padding: 48px 24px 80px; }
+  .catalog-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
+  .catalog-list { display: flex; flex-direction: column; gap: 0; }
+  .catalog-row {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(201, 162, 75, 0.15);
+  }
+  .catalog-row img { width: 90px; height: 90px; object-fit: cover; border-radius: 10px; }
+  .catalog-row h3 { color: var(--cream); font-size: 1.2rem; margin-bottom: 6px; }
+  .catalog-row .notes-row { margin-bottom: 0; }
+  .catalog-price { text-align: right; white-space: nowrap; }
+  .catalog-price .price { font-size: 1.3rem; }
+  @media print {
+    body { background: #fff; color: #1a1a1a; }
+    .site-header, .whatsapp-float, .catalog-bar { display: none; }
+    .catalog-row { border-bottom-color: #ddd; }
+    .catalog-row h3, .catalog-page h1 { color: #1a1a1a; }
+    .note-badge { color: #7a5c1e; border-color: #c9a24b; background: transparent; }
+    .price { color: #7a5c1e; }
+  }
+  @media (max-width: 600px) {
+    .catalog-row { grid-template-columns: 64px 1fr; }
+    .catalog-price { grid-column: 1 / -1; text-align: left; }
+    .catalog-row img { width: 64px; height: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Perfumes del Mar - Inicio">
+      <span class="logo-text">PERFUMES <span>DEL MAR</span></span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="productos.html">Productos</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a class="whatsapp-btn" data-whatsapp href="#" target="_blank" rel="noopener noreferrer">
+        <span>WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="catalog-page">
+  <div class="catalog-bar">
+    <div>
+      <h1 class="section-title" style="text-align:left; margin-bottom:6px;">Catálogo Completo</h1>
+      <p class="section-sub" style="text-align:left; margin:0; max-width:none;">Todas nuestras fragancias, listas para guardar o imprimir.</p>
+    </div>
+    <button class="btn-primary" onclick="window.print()">Descargar / Imprimir PDF</button>
+  </div>
+
+  <div id="catalog-list" class="catalog-list"></div>
+</main>
+
+<script src="products.js"></script>
+<script>
+  const GENERO_LABEL = { hombre: "Hombre", mujer: "Mujer", unisex: "Unisex" };
+  document.getElementById("catalog-list").innerHTML = PRODUCTS.map((p) => `
+    <div class="catalog-row">
+      <img src="${p.imagenes[0]}" alt="${p.nombre}" />
+      <div>
+        <h3>${p.nombre} <span class="gender-badge gender-${p.genero}" style="position:static; display:inline-block; margin-left:8px;">${GENERO_LABEL[p.genero]}</span></h3>
+        <div class="notes-row">${p.notas.map((n) => `<span class="note-badge">${n}</span>`).join("")}</div>
+      </div>
+      <div class="catalog-price"><span class="price">$${p.precio.toLocaleString("es-AR")} ARS</span></div>
+    </div>
+  `).join("");
+  document.querySelectorAll("[data-whatsapp]").forEach((el) => {
+    el.href = "https://wa.me/5215512345678?text=" + encodeURIComponent("Hola, quiero más información sobre sus perfumes árabes.");
+  });
+</script>
+</body>
+</html>

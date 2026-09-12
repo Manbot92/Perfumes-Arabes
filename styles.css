@@ -164,6 +164,17 @@ img { max-width: 100%; display: block; }
 }
 .btn-primary:hover { transform: translateY(-3px); background: var(--gold-light); box-shadow: 0 12px 34px rgba(201, 162, 75, 0.4); }
 
+.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.hero-actions .btn-primary,
+.hero-actions .btn-secondary {
+  min-width: 220px;
+  text-align: center;
+  padding: 15px 38px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.hero-actions .btn-secondary { border-color: var(--gold-light); }
+
 .scroll-hint {
   position: absolute;
   bottom: 28px; left: 50%;
@@ -202,6 +213,34 @@ img { max-width: 100%; display: block; }
 .products-section--alt { background: var(--black); }
 .see-all-row { text-align: center; margin-top: 44px; }
 
+.catalog-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 44px;
+}
+.filter-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+@media (max-width: 640px) {
+  .catalog-toolbar { justify-content: center; text-align: center; }
+}
+.filter-btn {
+  background: transparent;
+  border: 1px solid rgba(201, 162, 75, 0.35);
+  color: var(--text-muted);
+  padding: 9px 24px;
+  border-radius: 30px;
+  font-family: "Tajawal", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.filter-btn:hover { border-color: var(--gold); color: var(--gold-light); }
+.filter-btn.is-active { background: var(--gold); border-color: var(--gold); color: var(--black); font-weight: 700; }
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -209,6 +248,8 @@ img { max-width: 100%; display: block; }
 }
 
 .product-card {
+  display: flex;
+  flex-direction: column;
   background: var(--wood);
   border: 1px solid rgba(201, 162, 75, 0.15);
   border-radius: var(--radius);
@@ -225,7 +266,7 @@ img { max-width: 100%; display: block; }
 .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
 .product-card:hover .product-img img { transform: scale(1.08); }
 
-.product-body { padding: 22px 24px 26px; }
+.product-body { display: flex; flex-direction: column; flex: 1; padding: 22px 24px 26px; }
 .product-link h3 { font-size: 1.4rem; color: var(--cream); margin-bottom: 10px; transition: color 0.2s ease; }
 .product-link:hover h3 { color: var(--gold-light); }
 
@@ -258,7 +299,7 @@ img { max-width: 100%; display: block; }
 
 .product-desc { color: var(--text-muted); font-size: 1rem; margin-bottom: 18px; min-height: 48px; }
 
-.price-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.price-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 16px; }
 .price { font-family: "Cinzel", Georgia, serif; font-size: 1.2rem; color: var(--gold-light); }
 .price-lg { font-size: 1.8rem; display: block; margin: 14px 0 20px; }
 
@@ -299,8 +340,8 @@ img { max-width: 100%; display: block; }
   border-radius: var(--radius);
   max-width: 900px;
   width: 100%;
-  max-height: 88vh;
-  overflow-y: auto;
+  max-height: 92vh;
+  overflow: hidden;
   position: relative;
   animation: modalPop 0.28s ease both;
 }
@@ -327,11 +368,14 @@ img { max-width: 100%; display: block; }
   gap: 0;
 }
 
-.detail-body { padding: 32px 36px; }
-.detail-body .gender-badge { position: static; display: inline-block; margin-bottom: 10px; }
-.detail-body h2 { font-size: 1.9rem; color: var(--cream); margin: 0 0 10px; text-wrap: balance; }
-.detail-body .btn-primary { margin: 6px 0 30px; box-shadow: none; }
-.profile-title { color: var(--gold-light); font-size: 1.15rem; margin-bottom: 12px; }
+.detail-body { padding: 26px 32px; }
+.detail-body .gender-badge { position: static; display: inline-block; margin-bottom: 8px; }
+.detail-body h2 { font-size: 1.7rem; color: var(--cream); margin: 0 0 8px; text-wrap: balance; }
+.detail-body .notes-row { margin-bottom: 10px; }
+.detail-body .product-desc { margin-bottom: 12px; }
+.detail-body .price-lg { margin: 0 0 12px; }
+.detail-body .btn-primary { margin: 6px 0 16px; box-shadow: none; }
+.profile-title { color: var(--gold-light); font-size: 1.05rem; margin-bottom: 6px; }
 #radar-canvas { max-width: 100%; display: block; margin: 0 auto; }
 
 /* Carousel */
@@ -391,8 +435,13 @@ img { max-width: 100%; display: block; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 56px;
-  align-items: start;
+  align-items: center;
 }
+
+.contact-heading { text-align: left; }
+.contact-heading .section-title { text-align: left; }
+.contact-heading .section-sub { text-align: left; margin: 0; max-width: none; }
+.contact-heading .gold-divider { margin: 0 0 20px; }
 
 .contact-info h3 { color: var(--gold-light); font-size: 1.3rem; margin-bottom: 22px; }
 
@@ -407,34 +456,6 @@ img { max-width: 100%; display: block; }
 
 .social-row { display: flex; gap: 14px; margin-top: 28px; }
 
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  background: var(--black-soft);
-  padding: 32px;
-  border-radius: var(--radius);
-  border: 1px solid rgba(201, 162, 75, 0.15);
-}
-
-.contact-form input,
-.contact-form textarea {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(201, 162, 75, 0.3);
-  color: var(--cream);
-  font-family: inherit;
-  font-size: 1rem;
-  padding: 10px 4px;
-  transition: border-color 0.25s ease;
-}
-.contact-form input::placeholder,
-.contact-form textarea::placeholder { color: var(--text-muted); }
-.contact-form input:focus,
-.contact-form textarea:focus { outline: none; border-color: var(--gold); }
-.contact-form textarea { resize: vertical; min-height: 90px; }
-
-.form-note { font-size: 0.85rem; color: var(--text-muted); text-align: center; }
 
 /* ---------- Footer ---------- */
 .site-footer {
@@ -520,5 +541,7 @@ img { max-width: 100%; display: block; }
 
 @media (max-width: 480px) {
   .section { padding: 70px 0; }
-  .contact-form { padding: 24px; }
+  .contact-grid { grid-template-columns: 1fr; text-align: center; }
+  .contact-heading, .contact-heading .section-title, .contact-heading .section-sub { text-align: center; }
+  .contact-heading .gold-divider { margin: 0 auto 20px; }
 }

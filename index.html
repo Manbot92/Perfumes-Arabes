@@ -16,11 +16,6 @@
 <header class="site-header">
   <div class="header-inner">
     <a href="#home" class="logo" aria-label="Perfumes del Mar - Inicio">
-      <svg width="34" height="34" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M24 4C24 4 32 16 32 26C32 34.8366 28.4183 40 24 40C19.5817 40 16 34.8366 16 26C16 16 24 4 24 4Z" stroke="#c9a24b" stroke-width="2"/>
-        <path d="M24 40V44" stroke="#c9a24b" stroke-width="2" stroke-linecap="round"/>
-        <path d="M17 24C17 24 20 22 24 22C28 22 31 24 31 24" stroke="#c9a24b" stroke-width="1.4"/>
-      </svg>
       <span class="logo-text">PERFUMES <span>DEL MAR</span></span>
     </a>
 
@@ -58,7 +53,10 @@
       <span class="hero-eyebrow">Perfumería Árabe de Autor</span>
       <h1>La esencia de Oriente, <em>capturada en cada gota</em></h1>
       <p>Oud, ámbar y maderas preciosas destilados con las técnicas milenarias del Golfo Arábigo.</p>
-      <a href="#destacados" class="btn-primary">Explorar Colección</a>
+      <div class="hero-actions">
+        <a href="productos.html" class="btn-primary">Ver Productos</a>
+        <a href="catalogo.html" class="btn-secondary" target="_blank" rel="noopener noreferrer">Descargar Catálogo</a>
+      </div>
     </div>
     <span class="scroll-hint">↓</span>
   </section>
@@ -70,18 +68,20 @@
       <p class="section-sub reveal">Nuestra selección del momento, elegida por la casa.</p>
       <div id="featured-grid" class="product-grid"></div>
       <div class="see-all-row reveal">
-        <a href="productos.html" class="btn-secondary">Ver todo el catálogo</a>
+        <a href="productos.html" class="btn-secondary">Ver todos los productos</a>
       </div>
     </div>
   </section>
 
   <section id="contacto" class="section contact-section">
     <div class="container">
-      <h2 class="section-title reveal">Contáctanos</h2>
-      <div class="gold-divider reveal"></div>
-      <p class="section-sub reveal">¿Tienes dudas sobre una fragancia o quieres un consejo personalizado? Escríbenos.</p>
-
       <div class="contact-grid">
+        <div class="contact-heading reveal">
+          <h2 class="section-title">Contáctanos</h2>
+          <div class="gold-divider"></div>
+          <p class="section-sub">¿Tienes dudas sobre una fragancia o quieres un consejo personalizado? Escríbenos.</p>
+        </div>
+
         <div class="contact-info reveal">
           <h3>Hablemos</h3>
 
@@ -115,14 +115,6 @@
             </a>
           </div>
         </div>
-
-        <form id="contact-form" class="contact-form reveal">
-          <input type="text" name="nombre" placeholder="Tu nombre" required />
-          <input type="email" name="correo" placeholder="Tu correo" required />
-          <textarea name="mensaje" placeholder="¿En qué podemos ayudarte?" required></textarea>
-          <button type="submit" class="btn-primary">Enviar por WhatsApp</button>
-          <p class="form-note">Al enviar, se abrirá WhatsApp con tu mensaje listo para confirmar el envío.</p>
-        </form>
       </div>
     </div>
   </section>
