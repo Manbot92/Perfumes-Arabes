@@ -22,12 +22,12 @@ function productCard(p) {
   const badges = p.notas.map((n) => `<span class="note-badge">${n}</span>`).join("");
   return `
     <article class="product-card reveal">
-      <a class="product-img" href="#producto/${p.id}">
+      <a class="product-img" href="productos.html#producto/${p.id}">
         <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" />
         <span class="gender-badge gender-${p.genero}">${GENERO_LABEL[p.genero]}</span>
       </a>
       <div class="product-body">
-        <a href="#producto/${p.id}" class="product-link"><h3>${p.nombre}</h3></a>
+        <a href="productos.html#producto/${p.id}" class="product-link"><h3>${p.nombre}</h3></a>
         <div class="notes-row">${badges}</div>
         <p class="product-desc">${p.descripcion}</p>
         <div class="price-row">
@@ -121,10 +121,10 @@ function renderDetail(id) {
 }
 
 function router() {
-  const hash = location.hash;
   const storefront = document.getElementById("storefront");
   const detalle = document.getElementById("detalle");
-  const match = hash.match(/^#producto\/(.+)$/);
+  if (!detalle) return;
+  const match = location.hash.match(/^#producto\/(.+)$/);
   if (match) {
     storefront.hidden = true;
     detalle.hidden = false;

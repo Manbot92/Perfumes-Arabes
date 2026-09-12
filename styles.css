@@ -200,6 +200,7 @@ img { max-width: 100%; display: block; }
 /* ---------- Products ---------- */
 .products-section { background: var(--black-soft); }
 .products-section--alt { background: var(--black); }
+.see-all-row { text-align: center; margin-top: 44px; }
 
 .product-grid {
   display: grid;
