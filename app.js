@@ -22,12 +22,12 @@ function productCard(p) {
   const badges = p.notas.map((n) => `<span class="note-badge">${n}</span>`).join("");
   return `
     <article class="product-card reveal">
-      <a class="product-img" href="productos.html#producto/${p.id}">
-        <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" />
+      <a class="product-img" href="#producto/${p.id}">
+        <img src="${p.imagenes[0]}" alt="${p.nombre}" loading="lazy" />
         <span class="gender-badge gender-${p.genero}">${GENERO_LABEL[p.genero]}</span>
       </a>
       <div class="product-body">
-        <a href="productos.html#producto/${p.id}" class="product-link"><h3>${p.nombre}</h3></a>
+        <a href="#producto/${p.id}" class="product-link"><h3>${p.nombre}</h3></a>
         <div class="notes-row">${badges}</div>
         <p class="product-desc">${p.descripcion}</p>
         <div class="price-row">
@@ -58,7 +58,7 @@ function drawRadar(canvas, perfil) {
   ctx.clearRect(0, 0, size, size);
   ctx.strokeStyle = "rgba(201,162,75,0.25)";
   ctx.fillStyle = "rgba(201,162,75,0.7)";
-  ctx.font = "13px Cormorant Garamond, serif";
+  ctx.font = "13px Tajawal, sans-serif";
 
   // rings
   for (let ring = 1; ring <= 4; ring++) {
@@ -100,13 +100,33 @@ function drawRadar(canvas, perfil) {
   ctx.stroke();
 }
 
+let carouselIndex = 0;
+
+function showCarouselImage(i) {
+  const track = document.getElementById("carousel-track");
+  if (!track) return;
+  const imgs = track.querySelectorAll("img");
+  const dots = document.querySelectorAll("#carousel-dots button");
+  carouselIndex = (i + imgs.length) % imgs.length;
+  imgs.forEach((img, idx) => img.classList.toggle("is-active", idx === carouselIndex));
+  dots.forEach((dot, idx) => dot.classList.toggle("is-active", idx === carouselIndex));
+}
+
 function renderDetail(id) {
   const p = PRODUCTS.find((x) => x.id === id);
   const el = document.getElementById("detail-content");
   if (!p || !el) return;
   const badges = p.notas.map((n) => `<span class="note-badge">${n}</span>`).join("");
+  const slides = p.imagenes.map((src, i) => `<img src="${src}" alt="${p.nombre} foto ${i + 1}" class="${i === 0 ? "is-active" : ""}" />`).join("");
+  const dots = p.imagenes.map((_, i) => `<button aria-label="Foto ${i + 1}" class="${i === 0 ? "is-active" : ""}" data-dot="${i}"></button>`).join("");
   el.innerHTML = `
-    <div class="detail-img"><img src="${p.imagen}" alt="${p.nombre}" /></div>
+    <div class="carousel">
+      <div id="carousel-track" class="carousel-track">${slides}</div>
+      ${p.imagenes.length > 1 ? `
+        <button class="carousel-btn carousel-prev" id="carousel-prev" aria-label="Foto anterior">‹</button>
+        <button class="carousel-btn carousel-next" id="carousel-next" aria-label="Foto siguiente">›</button>
+        <div id="carousel-dots" class="carousel-dots">${dots}</div>` : ""}
+    </div>
     <div class="detail-body">
       <span class="gender-badge gender-${p.genero}">${GENERO_LABEL[p.genero]}</span>
       <h2>${p.nombre}</h2>
@@ -118,22 +138,32 @@ function renderDetail(id) {
       <canvas id="radar-canvas" width="360" height="360"></canvas>
     </div>`;
   drawRadar(document.getElementById("radar-canvas"), p.perfil);
+
+  carouselIndex = 0;
+  const prev = document.getElementById("carousel-prev");
+  const next = document.getElementById("carousel-next");
+  if (prev) prev.addEventListener("click", () => showCarouselImage(carouselIndex - 1));
+  if (next) next.addEventListener("click", () => showCarouselImage(carouselIndex + 1));
+  document.querySelectorAll("#carousel-dots button").forEach((dot) => {
+    dot.addEventListener("click", () => showCarouselImage(Number(dot.dataset.dot)));
+  });
 }
 
 function router() {
-  const storefront = document.getElementById("storefront");
-  const detalle = document.getElementById("detalle");
-  if (!detalle) return;
+  const overlay = document.getElementById("modal-overlay");
+  if (!overlay) return;
   const match = location.hash.match(/^#producto\/(.+)$/);
   if (match) {
-    storefront.hidden = true;
-    detalle.hidden = false;
     renderDetail(match[1]);
-    window.scrollTo(0, 0);
+    overlay.hidden = false;
   } else {
-    storefront.hidden = false;
-    detalle.hidden = true;
+    overlay.hidden = true;
   }
+}
+
+function closeModal() {
+  history.pushState("", document.title, location.pathname + location.search);
+  document.getElementById("modal-overlay").hidden = true;
 }
 
 function wireContactLinks() {
@@ -175,12 +205,22 @@ function wireContactForm() {
   });
 }
 
+function wireModal() {
+  const overlay = document.getElementById("modal-overlay");
+  const closeBtn = document.getElementById("modal-close");
+  if (!overlay) return;
+  closeBtn.addEventListener("click", closeModal);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !overlay.hidden) closeModal(); });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
   wireContactLinks();
   wireMobileNav();
   wireContactForm();
   wireScrollReveal();
+  wireModal();
   router();
 });
 window.addEventListener("hashchange", router);

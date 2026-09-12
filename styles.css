@@ -18,8 +18,8 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--black);
   color: var(--cream);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  line-height: 1.6;
+  font-family: "Tajawal", "Segoe UI", Arial, sans-serif;
+  line-height: 1.65;
   overflow-x: hidden;
 }
 
@@ -278,32 +278,109 @@ img { max-width: 100%; display: block; }
 .btn-secondary:hover { background: var(--gold); color: var(--black); }
 .btn-small { padding: 8px 18px; font-size: 0.92rem; }
 
-/* ---------- Detail view ---------- */
-.detail-section { background: var(--black); min-height: 70vh; }
-.back-link {
-  display: inline-block;
-  color: var(--gold-light);
-  margin-bottom: 32px;
-  font-size: 1.05rem;
-  transition: opacity 0.2s ease;
+/* ---------- Product modal ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 5, 3, 0.82);
+  backdrop-filter: blur(4px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.25s ease both;
 }
-.back-link:hover { opacity: 0.75; }
+
+.modal-box {
+  background: var(--wood);
+  border: 1px solid rgba(201, 162, 75, 0.3);
+  border-radius: var(--radius);
+  max-width: 900px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalPop 0.28s ease both;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(201, 162, 75, 0.4);
+  border-radius: 50%;
+  background: rgba(0,0,0,0.3);
+  color: var(--gold-light);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s ease;
+}
+.modal-close:hover { background: var(--gold); color: var(--black); }
 
 .detail-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  gap: 0;
   align-items: start;
 }
-.detail-img { border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(201,162,75,0.2); }
-.detail-body h2 { font-size: 2rem; color: var(--cream); margin: 14px 0 10px; }
+
+.detail-body { padding: 32px 36px; }
+.detail-body h2 { font-size: 1.9rem; color: var(--cream); margin: 14px 0 10px; text-wrap: balance; }
 .detail-body .btn-primary { margin: 6px 0 30px; box-shadow: none; }
-.profile-title { color: var(--gold-light); font-size: 1.2rem; margin-bottom: 12px; }
-#radar-canvas { max-width: 100%; }
+.profile-title { color: var(--gold-light); font-size: 1.15rem; margin-bottom: 12px; }
+#radar-canvas { max-width: 100%; display: block; margin: 0 auto; }
+
+/* Carousel */
+.carousel {
+  position: relative;
+  background: var(--black);
+  border-radius: var(--radius) 0 0 var(--radius);
+  overflow: hidden;
+}
+.carousel-track { position: relative; aspect-ratio: 1 / 1; }
+.carousel-track img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity 0.35s ease;
+}
+.carousel-track img.is-active { opacity: 1; }
+
+.carousel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: rgba(13,11,8,0.55);
+  border: 1px solid rgba(201,162,75,0.4);
+  color: var(--gold-light);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.carousel-btn:hover { background: var(--gold); color: var(--black); }
+.carousel-prev { left: 12px; }
+.carousel-next { right: 12px; }
+
+.carousel-dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+.carousel-dots button {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1px solid var(--gold-light);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+.carousel-dots button.is-active { background: var(--gold-light); }
 
 @media (max-width: 860px) {
   .detail-grid { grid-template-columns: 1fr; }
+  .carousel { border-radius: var(--radius) var(--radius) 0 0; }
+  .detail-body { padding: 26px 24px 32px; }
 }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modalPop { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
 
 /* ---------- Contact ---------- */
 .contact-section { background: var(--black); }
