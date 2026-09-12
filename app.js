@@ -170,14 +170,17 @@ function router() {
   if (match) {
     renderDetail(match[1]);
     overlay.hidden = false;
+    document.body.classList.add("modal-open");
   } else {
     overlay.hidden = true;
+    document.body.classList.remove("modal-open");
   }
 }
 
 function closeModal() {
   history.pushState("", document.title, location.pathname + location.search);
   document.getElementById("modal-overlay").hidden = true;
+  document.body.classList.remove("modal-open");
 }
 
 function wireContactLinks() {
