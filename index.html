@@ -28,7 +28,6 @@
       <ul class="nav-links">
         <li><a href="#home">Inicio</a></li>
         <li><a href="#productos">Productos</a></li>
-        <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
 
@@ -49,28 +48,43 @@
   <div id="mobile-nav" class="mobile-nav">
     <a href="#home">Inicio</a>
     <a href="#productos">Productos</a>
-    <a href="#contacto">Contacto</a>
   </div>
 </header>
 
-<main>
+<main id="storefront">
 
   <section id="home" class="hero">
     <div class="hero-content">
       <span class="hero-eyebrow">Perfumería Árabe de Autor</span>
       <h1>La esencia de Oriente, <em>capturada en cada gota</em></h1>
       <p>Oud, ámbar y maderas preciosas destilados con las técnicas milenarias del Golfo Arábigo.</p>
-      <a href="#productos" class="btn-primary">Explorar Colección</a>
+      <a href="#destacados" class="btn-primary">Explorar Colección</a>
     </div>
     <span class="scroll-hint">↓</span>
   </section>
 
-  <section id="productos" class="section products-section">
+  <section id="destacados" class="section products-section">
     <div class="container">
-      <h2 class="section-title reveal">Nuestra Colección</h2>
+      <h2 class="section-title reveal">Destacados</h2>
       <div class="gold-divider reveal"></div>
-      <p class="section-sub reveal">Fragancias exclusivas elaboradas con ingredientes nobles de Medio Oriente. Disponibles con envío seguro a través de Mercado Libre.</p>
+      <p class="section-sub reveal">Nuestra selección del momento, elegida por la casa.</p>
+      <div id="featured-grid" class="product-grid"></div>
+    </div>
+  </section>
+
+  <section id="productos" class="section products-section products-section--alt">
+    <div class="container">
+      <h2 class="section-title reveal">Todos los Productos</h2>
+      <div class="gold-divider reveal"></div>
+      <p class="section-sub reveal">El catálogo completo, con notas, precio y perfil olfativo de cada fragancia.</p>
       <div id="product-grid" class="product-grid"></div>
+    </div>
+  </section>
+
+  <section id="detalle" class="section detail-section" hidden>
+    <div class="container">
+      <a href="#productos" class="back-link">← Volver al catálogo</a>
+      <div id="detail-content" class="detail-grid"></div>
     </div>
   </section>
 
