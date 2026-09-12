@@ -2,10 +2,10 @@
 const CONFIG = {
   whatsappNumber: "5215512345678",
   whatsappMessage: "Hola, quiero más información sobre sus perfumes árabes.",
-  email: "contacto@oudalsharq.com",
+  email: "contacto@perfumesdelmar.com",
   ciudad: "Ciudad de México, México",
-  instagram: "https://instagram.com/oudalsharq",
-  facebook: "https://facebook.com/oudalsharq"
+  instagram: "https://instagram.com/perfumesdelmar",
+  facebook: "https://facebook.com/perfumesdelmar"
 };
 
 const GENERO_LABEL = { hombre: "Hombre", mujer: "Mujer", unisex: "Unisex" };
